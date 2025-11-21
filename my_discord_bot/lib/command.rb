@@ -8,7 +8,7 @@ class Command
 
   def execute(event)
     # Bas-implementation - subklasser kommer override:a denna
-    nil
+    raise NotImplementedError, "Subclass must implement execute method" #NYTT
   end
 
 end
