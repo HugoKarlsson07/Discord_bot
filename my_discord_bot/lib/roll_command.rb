@@ -8,10 +8,17 @@ class RollCommand < Command
   def execute(event, arg)
     match = arg.match(/^(\d+)?d(\d+)$/i)
     if match
-      count = match[1] ? match[1].to_i : 1  # Default 1 om inget nummer
+      count = match[1] ? match[1].to_i : 1
       sides = match[2].to_i
-      # count = 2, sides = 6
-    end  
+
+      total = 0
+      results = []
+      coun  t.times do
+        rull += rand(1..sides)
+        results << roll
+        total += rull
+      end
     event.execute("🎲 Rullade #{count}d#{sides}: #{results.join(', ')} = **#{total}**")
+    end
   end 
 end
