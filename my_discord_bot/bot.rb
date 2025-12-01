@@ -3,6 +3,7 @@ require 'dotenv/load'
 require_relative 'lib/info_command.rb'
 require_relative 'lib/dice_command.rb'
 require_relative 'lib/text_command.rb'
+require_relative 'lib/roll_command.rb'
 
 # Hämta token från miljövariabel
 token = ENV['DISCORD_BOT_TOKEN']
@@ -40,8 +41,16 @@ dice_command = DiceCommand.new()
 bot.message do |event|
   # Ignorera bot:ens egna meddelanden
   next if event.user.bot_account?
+  
+  content = event.content.strip
 
-  command, arg = event.content.strip.match(/^(!\w+) ?(.*)/i).captures
+  # Dela upp i command och arguments
+  parts = content.split
+  command_name = parts.first&.downcase
+  args = parts[1..]  # Allt efter första ordet
+  #command, arg = event.content.strip.match(/^(!\w+) ?(.*)/i).captures
+
+
 
   # Kolla om meddelandet är ett kommando
   case command

@@ -24,4 +24,17 @@ class TestRollCommand < Minitest::Test
     number = response.match(/= \*\*(\d+)\*\*/)[1].to_i
     assert_includes 1..6, number
   end
+  def test_roll_command_rolls_2d20_by_default
+    command = RollCommand.new
+    mock_event = MockEvent.new
+
+    command.execute(mock_event, ["2d20"])  # Inga argument = default d6
+
+    response = mock_event.responses.first
+    assert_match /🎲 Rullade 2d20:/, response
+
+    # Extrahera resultat
+    number = response.match(/= \*\*(\d+)\*\*/)[1].to_i
+    assert_includes 2..40, number
+  end
 end
