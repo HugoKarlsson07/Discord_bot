@@ -36,19 +36,17 @@ info_command = TextCommand.new(
   text: "🤖 I'm a Discord bot built with Ruby and TDD!"
 )
 dice_command = DiceCommand.new()
+roll_command = RollCommand.new()
 
 # Hantera meddelanden
 bot.message do |event|
   # Ignorera bot:ens egna meddelanden
   next if event.user.bot_account?
   
-  content = event.content.strip
-
-  # Dela upp i command och arguments
-  parts = content.split
-  command_name = parts.first&.downcase
-  args = parts[1..]  # Allt efter första ordet
-  #command, arg = event.content.strip.match(/^(!\w+) ?(.*)/i).captures
+  match = event.content.match(/^(!\w+) ?(.*)/i)
+  next unless match   # hoppa om det inte är ett kommando
+  command  = match[1]
+  argument = match[2]
 
 
 
@@ -63,7 +61,7 @@ bot.message do |event|
   when "!dice"
     dice_command.execute(event)
   when "!roll"
-    roll_command.execute(event, arg)
+    roll_command.execute(event, argument)
   end
 end
 

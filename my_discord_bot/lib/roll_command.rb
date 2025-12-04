@@ -6,21 +6,26 @@ class RollCommand < Command
   end
 
   def execute(event, arg)
-    if arg != []
-      match = arg[0].match(/^(\d+)?d(\d+)$/i)
+    # Om arg är tom eller nil → default
+    if arg.nil? || arg.strip.empty?
+      count = 1
+      sides = 6
+    else
+      # matcha strängen mot formatet NdM eller dM
+      match = arg.match(/^(\d+)?d(\d+)$/i)
       if match
         count = match[1] ? match[1].to_i : 1
         sides = match[2] ? match[2].to_i : 6
+      else
+        event.respond("❌ Fel format! Använd NdM, t.ex. !roll 2d6")
+        return
       end
-    else
-      count = 1
-      sides = 6
     end
 
     results = roll(sides, count)
-    p results
-    event.respond("🎲 Rullade #{count}d#{sides}: #{results.join(',')} = **#{results.sum}**")
-  end 
+    event.respond("🎲 Rullade #{count}d#{sides}: #{results.join(', ')} = **#{results.sum}**")
+end
+
 
   private
   def roll(sides, count)
