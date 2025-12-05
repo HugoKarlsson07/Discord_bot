@@ -2,7 +2,7 @@ require_relative '../lib/command.rb'
 
 class TextCommand < Command
   def initialize(name: "test",description: "Test command",text: "Test response")
-    super(name: "test", description: "Test command")
+    super(name: name, description: description)
     @text = text
   end
   attr_reader :text

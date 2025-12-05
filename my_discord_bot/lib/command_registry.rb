@@ -1,19 +1,18 @@
-
-
-
+require "debug"
 
 class CommandRegistry
   attr_accessor  :commands
-  def initialize
-    command = @command
+  def initialize 
+    @commands = {}
   end
 
   def register(command)
-    @commands ||= {}
+ 
     @commands[command.name] = command
   end
 
   def find(command_name)
-    
+    #binding.break
+    @commands[command_name.to_s]
   end
 end

@@ -22,7 +22,8 @@ class TestCommandRegistry < Minitest::Test
   end
   def test_can_find_registered_command
     registry = CommandRegistry.new
-    command = TextCommand.new(name: "hello", description: "Says hello", text: "Hello!")
+    command = TextCommand.new(name: "!hello", description: "Says hello", text: "Hello!")
+    p "command #{command.inspect}"
     registry.register(command)
 
     found = registry.find("!hello")
